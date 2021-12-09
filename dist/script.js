@@ -127,6 +127,15 @@ $.prototype.init = function (selector) {
     return this; // если selector не был передан, вернет пустой объект
   }
 
+  if (selector.tagName) {
+    // если есть свойство tagName, значит мы передаем не селектор, а html-элемент (узел),
+    this[0] = selector; // то этот элемент записываем в объект
+
+    this.length = 1; // длина объекта соответственно = 1, т.к. элемент один
+
+    return this; // возвращаем прототип, прекращаем дальнейшую работу функции
+  }
+
   Object.assign(this, document.querySelectorAll(selector)); // создаем новый объект, копируя свойства исходного объекта
 
   this.length = document.querySelectorAll(selector).length;
@@ -152,9 +161,179 @@ window.$ = $; // в глобальный объект window записывае�
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "./src/js/lib/core.js");
 /* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/display */ "./src/js/lib/modules/display.js");
+/* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
+/* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+/* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/actions.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/actions.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addAction = function (eventName, callback) {
+  if (!eventName || !callback) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].addEventListener(eventName, callback);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeAction = function (eventName, callback) {
+  if (!eventName || !callback) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].removeEventListener(eventName, callback);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addClick = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    if (callback) {
+      this[i].addEventListener('click', callback);
+    } else {
+      this[i].click();
+    }
+  }
+
+  return this;
+};
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/attributes.js":
+/*!******************************************!*\
+  !*** ./src/js/lib/modules/attributes.js ***!
+  \******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.setAttr = function (attrName, attrValue) {
+  if (!attrName || !attrValue) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].setAttribute(attrName, attrValue);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeAttr = function (attrName) {
+  if (!attrName) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].removeAttribute(attrName);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.getAttr = function (attrName) {
+  if (!attrName) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    return this[i].getAttribute(attrName);
+  }
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleAttr = function (attrName, attrValue) {
+  if (!attrName || !attrValue) {
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    if (this[i].hasAttribute(attrName)) {
+      this[i].removeAttribute(attrName);
+    } else {
+      this[i].setAttribute(attrName, attrValue);
+    }
+  }
+
+  return this;
+};
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/classes.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/classes.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addClass = function () {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      continue;
+    }
+
+    this[i].classList.add(...arguments);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeClass = function () {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      continue;
+    }
+
+    this[i].classList.remove(...arguments);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleClass = function (className) {
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].classList) {
+      continue;
+    }
+
+    this[i].classList.toggle(className);
+  }
+
+  return this;
+};
 
 /***/ }),
 
@@ -222,11 +401,48 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggle = function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
+
  //$('div');
 //$('.active').hide().show();
 //$('div').hide().show();
+//$('.active').toggle().toggle();
+//$('.active').addClass('super', 'hello');
+//$('div').addClass('super', 'hello');
+//$('.active').removeClass('super', 'hello');
+//$('.active').toggleClass('super');
+//$('.active').addAction('click', sayHello);
+//$('.active').removeAction('click', sayHello);
+//$('.active').addClick(sayHello);
 
-$('.active').toggle().toggle();
+/*$('button').addAction('click', function() {
+	$(this).toggleClass('active');
+});*/
+
+/*$('button').addClick(function() {
+	$(this).toggleClass('active');
+});*/
+//$('button').setAttr('disabled', 'true');
+//$('button').getAttr('disabled');
+
+/*$('button').addClick(function() {
+	$(this).setAttr('disabled', 'true');
+});*/
+
+/*$('button').addClick(function() {
+	$(this).getAttr();
+});*/
+//$('div').setAttr('id', 'new');
+//console.log($('.active').getAttr('id'));
+//$('div').removeAttr('id');
+//$('.active').setAttr('id', 'new');
+//$('.active').toggleAttr('id', 'new');
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').addClick(function () {
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.active').toggleAttr('id', 'new');
+});
+/*function sayHello() {
+	console.log('Hello');
+}*/
 
 /***/ })
 

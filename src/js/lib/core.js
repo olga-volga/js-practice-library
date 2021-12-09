@@ -30,6 +30,12 @@ $.prototype.init = function(selector) {
 	if (!selector) {
 		return this;// если selector не был передан, вернет пустой объект
 	}
+	if (selector.tagName) {// если есть свойство tagName, значит мы передаем не селектор, а html-элемент (узел),
+		this[0] = selector;// то этот элемент записываем в объект
+		this.length = 1;// длина объекта соответственно = 1, т.к. элемент один
+		return this;// возвращаем прототип, прекращаем дальнейшую работу функции
+	}
+
 	Object.assign(this, document.querySelectorAll(selector));// создаем новый объект, копируя свойства исходного объекта
 	this.length = document.querySelectorAll(selector).length;
 
