@@ -162,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "./src/js/lib/core.js");
 /* harmony import */ var _modules_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/display */ "./src/js/lib/modules/display.js");
 /* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
-/* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+!(function webpackMissingModule() { var e = new Error("Cannot find module './modules/actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
 
 
@@ -170,56 +170,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-/***/ }),
-
-/***/ "./src/js/lib/modules/actions.js":
-/*!***************************************!*\
-  !*** ./src/js/lib/modules/actions.js ***!
-  \***************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
-
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addAction = function (eventName, callback) {
-  if (!eventName || !callback) {
-    return this;
-  }
-
-  for (let i = 0; i < this.length; i++) {
-    this[i].addEventListener(eventName, callback);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeAction = function (eventName, callback) {
-  if (!eventName || !callback) {
-    return this;
-  }
-
-  for (let i = 0; i < this.length; i++) {
-    this[i].removeEventListener(eventName, callback);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addClick = function (callback) {
-  for (let i = 0; i < this.length; i++) {
-    if (callback) {
-      this[i].addEventListener('click', callback);
-    } else {
-      this[i].click();
-    }
-  }
-
-  return this;
-};
 
 /***/ }),
 
