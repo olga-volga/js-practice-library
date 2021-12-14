@@ -52,7 +52,9 @@ $('div').addClick(function() {
 //console.log($('.some').closest('.findme'));
 //console.log($('.some').closest('.findme5').addClass('kjl'));
 //console.log($('.findme').findSiblings());
-console.log($('.more').getElem(0).findSiblings());
+//console.log($('.more').getElem(0).findSiblings());
+//$('button').fadeOut(1800);
+$('button').fadeIn(1800);
 
 /*function sayHello() {
 	console.log('Hello');

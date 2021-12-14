@@ -165,6 +165,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_eventActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/eventActions */ "./src/js/lib/modules/eventActions.js");
 /* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+
 
 
 
@@ -496,6 +498,78 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggle = function () {
 
 /***/ }),
 
+/***/ "./src/js/lib/modules/effects.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/effects.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+ // техническая функция запуска анимации
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animateOverTime = function (duration, callback, final) {
+  let timeStart;
+
+  function _animateOverTime(time) {
+    if (!timeStart) {
+      timeStart = time;
+    }
+
+    let timePassed = time - timeStart;
+    let param = Math.min(timePassed / duration, 1);
+    callback(param);
+
+    if (timePassed < duration) {
+      requestAnimationFrame(_animateOverTime);
+    } else {
+      if (typeof final === 'function') {
+        final();
+      }
+    }
+  }
+
+  return _animateOverTime;
+}; // fadeIn animation
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (duration, display, final) {
+  for (let i = 0; i < this.length; i++) {
+    this[i].style.display = display || 'block';
+
+    const _fadeIn = param => {
+      this[i].style.opacity = param;
+    };
+
+    const animation = this.animateOverTime(duration, _fadeIn, final);
+    requestAnimationFrame(animation);
+  }
+
+  return this;
+}; // fadeOut animation
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (duration, final) {
+  for (let i = 0; i < this.length; i++) {
+    const _fadeOut = param => {
+      this[i].style.opacity = 1 - param;
+
+      if (param === 1) {
+        this[i].style.display = 'none';
+      }
+    };
+
+    const animation = this.animateOverTime(duration, _fadeOut, final);
+    requestAnimationFrame(animation);
+  }
+
+  return this;
+};
+
+/***/ }),
+
 /***/ "./src/js/lib/modules/eventActions.js":
 /*!********************************************!*\
   !*** ./src/js/lib/modules/eventActions.js ***!
@@ -616,8 +690,10 @@ $('div').addClick(function() {
 //console.log($('.some').closest('.findme'));
 //console.log($('.some').closest('.findme5').addClass('kjl'));
 //console.log($('.findme').findSiblings());
+//console.log($('.more').getElem(0).findSiblings());
+//$('button').fadeOut(1800);
 
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.more').getElem(0).findSiblings());
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeIn(1800);
 /*function sayHello() {
 	console.log('Hello');
 }*/
