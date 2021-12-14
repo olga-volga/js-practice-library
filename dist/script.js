@@ -164,12 +164,167 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
 /* harmony import */ var _modules_eventActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/eventActions */ "./src/js/lib/modules/eventActions.js");
 /* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
+/* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/js/lib/modules/actions.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/actions.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+ // изменить содержимое html-элемента (если передан параметр content) или получить содержимое html-элемента (если метод вызван без аргумента)
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.htmlContent = function (content) {
+  for (let i = 0; i < this.length; i++) {
+    if (content) {
+      this[i].innerHTML = content;
+    } else {
+      return this[i].innerHTML;
+    }
+  }
+
+  return this;
+}; // получить определенный элемент по индексу элемента среди элементов с общим родителем
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.getElem = function (i) {
+  const currentObj = this[i];
+  const objLength = Object.keys(this).length;
+
+  for (let i = 0; i < objLength; i++) {
+    delete this[i];
+  }
+
+  this[0] = currentObj;
+  this.length = 1;
+  return this;
+}; // получить индекс элемента среди элементов с общим родителем
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.getElemIndex = function () {
+  const parent = this[0].parentNode;
+  const children = [...parent.children];
+
+  const findElemIndex = item => {
+    return item == this[0];
+  };
+
+  return children.findIndex(findElemIndex);
+}; // найти элемент по селектору среди уже выбранных
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.findElem = function (selector) {
+  const objCopy = Object.assign({}, this); // создаем копию объекта this
+
+  let numberOfItems = 0; // общее кол-во элементов
+
+  let counter = 0; // кол-во новых элементов, записанных в this
+
+  for (let i = 0; i < objCopy.length; i++) {
+    const arr = objCopy[i].querySelectorAll(selector); // ищем эл-ты по селектору внутри скопированного объекта
+
+    if (arr.length == 0) {
+      // если эл-ты не найдены, эту итерацию цикла пропускаем и продолжаем выполнение кода дальше
+      continue;
+    }
+
+    for (let j = 0; j < arr.length; j++) {
+      // если эл-ты найдены, то:
+      this[counter] = arr[j]; // каждый эл-т, найденный по селектору, записываем в общий объект this
+
+      counter++;
+    }
+
+    numberOfItems += arr.length;
+  }
+
+  this.length = numberOfItems;
+  const objLength = Object.keys(this).length; // кол-во эл-тов в объекте this
+
+  for (; numberOfItems < objLength; numberOfItems++) {
+    // перебираем объект this с новыми добавленными эл-тами и
+    delete this[numberOfItems]; // удаляем старые немодифицированные эл-ты
+  }
+
+  return this; // возвращаем модифицированный объект this
+  // Оптимизация
+
+  /*const newObj = this[0].querySelectorAll(selector);
+  
+  for (let i = 0; i < this.length; i++) {
+  	delete this[i];
+  }
+  Object.assign(this, newObj);
+  this.length = newObj.length;
+  return this;*/
+}; // определаить ближайший блок по заданному селектору
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  let counter = 0;
+
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].closest(selector)) {
+      return this;
+    }
+
+    this[i] = this[i].closest(selector);
+    counter++;
+  }
+
+  const objLength = Object.keys(this).length; // кол-во эл-тов в объекте this
+
+  for (; counter < objLength; counter++) {
+    // перебираем объект this с новыми добавленными эл-тами и
+    delete this[counter]; // удаляем старые немодифицированные эл-ты
+  }
+
+  return this;
+}; // получить все соседние элементы, не включая сам элемент
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.findSiblings = function () {
+  const objCopy = Object.assign({}, this);
+  let numberOfItems = 0;
+  let counter = 0;
+
+  for (let i = 0; i < objCopy.length; i++) {
+    const arr = objCopy[i].parentNode.children;
+
+    for (let j = 0; j < arr.length; j++) {
+      if (objCopy[i] === arr[j]) {
+        continue;
+      }
+
+      this[counter] = arr[j];
+      counter++;
+    }
+
+    numberOfItems += arr.length - 1;
+  }
+
+  this.length = numberOfItems;
+  const objLength = Object.keys(this).length;
+
+  for (; numberOfItems < objLength; numberOfItems++) {
+    delete this[numberOfItems];
+  }
+
+  return this;
+};
 
 /***/ }),
 
@@ -437,9 +592,32 @@ __webpack_require__.r(__webpack_exports__);
 //$('.active').setAttr('id', 'new');
 //$('.active').toggleAttr('id', 'new');
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').addClick(function () {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.active').toggleAttr('id', 'new');
+/*$('button').addClick(function() {
+	$('.active').toggleAttr('id', 'new');
+});*/
+//console.log($('.active').htmlContent());
+
+/*$('button').addClick(function() {
+	$(this).htmlContent('Thanks!');
+});*/
+
+/*$('button').addClick(function() {
+	$('div').getElem(2).toggleClass('active');
+});*/
+
+/*$('button').addClick(function() {
+	$('div').getElem(2).htmlContent('Thanks!');
 });
+$('div').addClick(function() {
+	console.log($(this).getElemIndex());
+});*/
+//console.log($('div').getElem(2).findElem('.more'));
+//console.log($('div').getElem(2).findElem('.some'));
+//console.log($('.some').closest('.findme'));
+//console.log($('.some').closest('.findme5').addClass('kjl'));
+//console.log($('.findme').findSiblings());
+
+console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.more').getElem(0).findSiblings());
 /*function sayHello() {
 	console.log('Hello');
 }*/

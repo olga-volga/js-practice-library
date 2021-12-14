@@ -31,9 +31,28 @@ import $ from './lib/lib';
 //$('div').removeAttr('id');
 //$('.active').setAttr('id', 'new');
 //$('.active').toggleAttr('id', 'new');
-$('button').addClick(function() {
+/*$('button').addClick(function() {
 	$('.active').toggleAttr('id', 'new');
+});*/
+//console.log($('.active').htmlContent());
+/*$('button').addClick(function() {
+	$(this).htmlContent('Thanks!');
+});*/
+/*$('button').addClick(function() {
+	$('div').getElem(2).toggleClass('active');
+});*/
+/*$('button').addClick(function() {
+	$('div').getElem(2).htmlContent('Thanks!');
 });
+$('div').addClick(function() {
+	console.log($(this).getElemIndex());
+});*/
+//console.log($('div').getElem(2).findElem('.more'));
+//console.log($('div').getElem(2).findElem('.some'));
+//console.log($('.some').closest('.findme'));
+//console.log($('.some').closest('.findme5').addClass('kjl'));
+//console.log($('.findme').findSiblings());
+console.log($('.more').getElem(0).findSiblings());
 
 /*function sayHello() {
 	console.log('Hello');
