@@ -4,6 +4,8 @@ import $ from './lib/lib';
 //$('div');
 //$('.active').hide().show();
 //$('div').hide().show();
+
+//Работа с css-классами и обработчиками событий
 //$('.active').toggle().toggle();
 //$('.active').addClass('super', 'hello');
 //$('div').addClass('super', 'hello');
@@ -34,6 +36,8 @@ import $ from './lib/lib';
 /*$('button').addClick(function() {
 	$('.active').toggleAttr('id', 'new');
 });*/
+
+//Создаем методы для работы с элементами
 //console.log($('.active').htmlContent());
 /*$('button').addClick(function() {
 	$(this).htmlContent('Thanks!');
@@ -53,9 +57,22 @@ $('div').addClick(function() {
 //console.log($('.some').closest('.findme5').addClass('kjl'));
 //console.log($('.findme').findSiblings());
 //console.log($('.more').getElem(0).findSiblings());
+
+// Создаем анимации fadeIn/fadeOut
 //$('button').fadeOut(1800);
-$('button').fadeIn(1800);
+//$('button').fadeIn(1800);
 
 /*function sayHello() {
 	console.log('Hello');
 }*/
+
+// Работа со стилями + создаем готовые компоненты кнопок для библиотеки
+$('#first').addClick(() => {
+	$('div').getElem(1).fadeOut(800);
+});
+$('[data-count="second"]').addClick(() => {
+	$('div').getElem(2).fadeOut(800);
+});
+$('button').getElem(2).addClick(() => {
+	$('.w-500').fadeOut(800);
+});

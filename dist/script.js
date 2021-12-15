@@ -634,6 +634,7 @@ __webpack_require__.r(__webpack_exports__);
  //$('div');
 //$('.active').hide().show();
 //$('div').hide().show();
+//Работа с css-классами и обработчиками событий
 //$('.active').toggle().toggle();
 //$('.active').addClass('super', 'hello');
 //$('div').addClass('super', 'hello');
@@ -669,6 +670,7 @@ __webpack_require__.r(__webpack_exports__);
 /*$('button').addClick(function() {
 	$('.active').toggleAttr('id', 'new');
 });*/
+//Создаем методы для работы с элементами
 //console.log($('.active').htmlContent());
 
 /*$('button').addClick(function() {
@@ -691,12 +693,24 @@ $('div').addClick(function() {
 //console.log($('.some').closest('.findme5').addClass('kjl'));
 //console.log($('.findme').findSiblings());
 //console.log($('.more').getElem(0).findSiblings());
+// Создаем анимации fadeIn/fadeOut
 //$('button').fadeOut(1800);
+//$('button').fadeIn(1800);
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeIn(1800);
 /*function sayHello() {
 	console.log('Hello');
 }*/
+// Работа со стилями + создаем готовые компоненты кнопок для библиотеки
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#first').addClick(() => {
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(1).fadeOut(800);
+});
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-count="second"]').addClick(() => {
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(2).fadeOut(800);
+});
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').getElem(2).addClick(() => {
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeOut(800);
+});
 
 /***/ })
 
