@@ -566,6 +566,40 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (dura
   }
 
   return this;
+}; // toggle fadeIn / fadeOut animation
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeToggle = function (duration, display, final) {
+  /*for (let i = 0; i < this.length; i++) {
+  	let animation;
+  	if (window.getComputedStyle(this[i]).display === 'none') {
+  		this[i].style.display = display || 'block';
+  
+  		const _fadeIn = (param) => {
+  			this[i].style.opacity = param;
+  		};
+  		animation = this.animateOverTime(duration, _fadeIn, final);
+  	} else {
+  		const _fadeOut = (param) => {
+  			this[i].style.opacity = 1 - param;
+  			
+  			if (param === 1) {
+  				this[i].style.display = 'none';
+  			}
+  		};
+  		animation = this.animateOverTime(duration, _fadeOut, final);
+  	}
+  	requestAnimationFrame(animation);
+  }
+  return this;*/
+  // Оптимизация
+  for (let i = 0; i < this.length; i++) {
+    if (window.getComputedStyle(this[i]).display === 'none') {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).fadeIn(duration, display, final);
+    } else {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).fadeOut(duration, final);
+    }
+  }
 };
 
 /***/ }),
@@ -702,14 +736,25 @@ $('div').addClick(function() {
 }*/
 // Работа со стилями + создаем готовые компоненты кнопок для библиотеки
 
+/*$('#first').addClick(() => {
+	$('div').getElem(1).fadeOut(800);
+});
+$('[data-count="second"]').addClick(() => {
+	$('div').getElem(2).fadeOut(800);
+});
+$('button').getElem(2).addClick(() => {
+	$('.w-500').fadeOut(800);
+});*/
+// Создаем анимацию fadeToggle
+
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#first').addClick(() => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(1).fadeOut(800);
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(1).fadeToggle(800);
 });
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-count="second"]').addClick(() => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(2).fadeOut(800);
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').getElem(2).fadeToggle(800);
 });
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').getElem(2).addClick(() => {
-  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeOut(800);
+  Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeToggle(800);
 });
 
 /***/ })

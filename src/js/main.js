@@ -67,7 +67,7 @@ $('div').addClick(function() {
 }*/
 
 // Работа со стилями + создаем готовые компоненты кнопок для библиотеки
-$('#first').addClick(() => {
+/*$('#first').addClick(() => {
 	$('div').getElem(1).fadeOut(800);
 });
 $('[data-count="second"]').addClick(() => {
@@ -75,4 +75,14 @@ $('[data-count="second"]').addClick(() => {
 });
 $('button').getElem(2).addClick(() => {
 	$('.w-500').fadeOut(800);
+});*/
+// Создаем анимацию fadeToggle
+$('#first').addClick(() => {
+	$('div').getElem(1).fadeToggle(800);
+});
+$('[data-count="second"]').addClick(() => {
+	$('div').getElem(2).fadeToggle(800);
+});
+$('button').getElem(2).addClick(() => {
+	$('.w-500').fadeToggle(800);
 });

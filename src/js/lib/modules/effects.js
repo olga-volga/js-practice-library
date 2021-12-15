@@ -52,3 +52,38 @@ $.prototype.fadeOut = function(duration, final) {
 	}
 	return this;
 };
+// toggle fadeIn / fadeOut animation
+$.prototype.fadeToggle = function(duration, display, final) {
+	/*for (let i = 0; i < this.length; i++) {
+		let animation;
+		if (window.getComputedStyle(this[i]).display === 'none') {
+			this[i].style.display = display || 'block';
+
+			const _fadeIn = (param) => {
+				this[i].style.opacity = param;
+			};
+			animation = this.animateOverTime(duration, _fadeIn, final);
+		} else {
+			const _fadeOut = (param) => {
+				this[i].style.opacity = 1 - param;
+				
+				if (param === 1) {
+					this[i].style.display = 'none';
+				}
+			};
+			animation = this.animateOverTime(duration, _fadeOut, final);
+		}
+		requestAnimationFrame(animation);
+	}
+	return this;*/
+
+	// Оптимизация
+
+	for (let i = 0; i < this.length; i++) {
+		if (window.getComputedStyle(this[i]).display === 'none') {
+			$(this[i]).fadeIn(duration, display, final);
+		} else {
+			$(this[i]).fadeOut(duration, final);
+		}
+	}
+};
