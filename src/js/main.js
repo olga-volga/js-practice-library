@@ -89,7 +89,7 @@ $('button').getElem(2).addClick(() => {
 });*/
 
 //Создаем Dropdown menu динамически
-$('.wrap').htmlContent(
+/*$('.wrap').htmlContent(
 	`<div class="dropdown">
 	    <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton">Dropdown button</button>
 	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButton>
@@ -99,4 +99,4 @@ $('.wrap').htmlContent(
 	    </div>
 	</div>`
 );
-$('.dropdown-toggle').dropdown();
+$('.dropdown-toggle').dropdown();*/
