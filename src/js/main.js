@@ -76,8 +76,9 @@ $('[data-count="second"]').addClick(() => {
 $('button').getElem(2).addClick(() => {
 	$('.w-500').fadeOut(800);
 });*/
+
 // Создаем анимацию fadeToggle
-$('#first').addClick(() => {
+/*$('#first').addClick(() => {
 	$('div').getElem(1).fadeToggle(800);
 });
 $('[data-count="second"]').addClick(() => {
@@ -85,4 +86,17 @@ $('[data-count="second"]').addClick(() => {
 });
 $('button').getElem(2).addClick(() => {
 	$('.w-500').fadeToggle(800);
-});
+});*/
+
+//Создаем Dropdown menu динамически
+$('.wrap').htmlContent(
+	`<div class="dropdown">
+	    <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton">Dropdown button</button>
+	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButton>
+	    	<a href="#" class="dropdown-item">Action #1</a>
+	    	<a href="#" class="dropdown-item">Action #2</a>
+	    	<a href="#" class="dropdown-item">Action #3</a>
+	    </div>
+	</div>`
+);
+$('.dropdown-toggle').dropdown();
