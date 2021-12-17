@@ -932,18 +932,15 @@ $('button').getElem(2).addClick(() => {
 });*/
 //Создаем Dropdown menu динамически
 
-/*$('.wrap').htmlContent(
-	`<div class="dropdown">
-	    <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton">Dropdown button</button>
-	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButton>
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrap').htmlContent(`<div class="dropdown">
+	    <button class="btn btn-primary dropdown-toggle dropdown-toggle-dinamic" id="dropdownMenuButtonDinamic">Dropdown dinamic button</button>
+	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButtonDinamic>
 	    	<a href="#" class="dropdown-item">Action #1</a>
 	    	<a href="#" class="dropdown-item">Action #2</a>
 	    	<a href="#" class="dropdown-item">Action #3</a>
 	    </div>
-	</div>`
-);
-$('.dropdown-toggle').dropdown();*/
-//Динамическое создание модальных окон
+	</div>`);
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.dropdown-toggle-dinamic').dropdown(); //Динамическое создание модальных окон
 
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').addClick(() => Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
   text: {
