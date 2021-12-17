@@ -27,13 +27,13 @@ $.prototype.getElem = function(i) {
 // получить индекс элемента среди элементов с общим родителем
 $.prototype.getElemIndex = function() {
 	const parent = this[0].parentNode;
-	const children = [...parent.children];
+	const childrenOfParent = [...parent.children];
 
 	const findElemIndex = (item) => {
 		return item == this[0];
 	};
 
-	return children.findIndex(findElemIndex);
+	return childrenOfParent.findIndex(findElemIndex);
 };
 // найти элемент по селектору среди уже выбранных
 $.prototype.findElem = function(selector) {
