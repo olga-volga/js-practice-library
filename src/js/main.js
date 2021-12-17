@@ -100,3 +100,37 @@ $('button').getElem(2).addClick(() => {
 	</div>`
 );
 $('.dropdown-toggle').dropdown();*/
+
+//Динамическое создание модальных окон
+$('#trigger').addClick(() => $('#trigger').createModal({
+	text: {
+		title: 'Dinamic Modal title',
+		body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt, quam odit, dolor cupiditate velit porro recusandae. Tenetur, eius ullam, amet veritatis neque fuga dolorem sapiente ducimus nisi, inventore ex fugiat?'
+	},
+	btns: {
+		count: 3,
+		settings: [
+			[
+				'Close',
+				['btn-danger', 'mr-10'],
+				true
+			],
+			[
+				'Save canges',
+				['btn-success', 'mr-10'],
+				false,
+				() => {
+					alert('Changes are saved');
+				}
+			],
+			[
+				'Exit',
+				['btn-warning'],
+				false,
+				() => {
+					alert('Please, save the results!');
+				}
+			]
+		]
+	}
+}));

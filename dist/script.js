@@ -132,7 +132,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.calcScrollWidth = functi
   return scrollWidth;
 };
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function (created) {
   for (let i = 0; i < this.length; i++) {
     const target = Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).getAttr('data-target');
     Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).addClick(e => {
@@ -141,30 +141,92 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
       document.body.style.overflow = 'hidden';
       document.body.style.marginRight = `${this.calcScrollWidth()}px`;
     });
-  }
+    const closeElements = document.querySelectorAll(`${target} [data-close]`);
+    closeElements.forEach(item => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).addClick(() => {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeOut(500);
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          document.body.style.marginRight = '';
 
-  const closeElements = document.querySelectorAll('[data-close]');
-  closeElements.forEach(item => {
-    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).addClick(() => {
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').fadeOut(500);
-      setTimeout(() => {
-        document.body.style.overflow = '';
-        document.body.style.marginRight = '';
-      }, 500);
+          if (created) {
+            document.querySelector(target).remove();
+          }
+        }, 500);
+      });
     });
-  });
-  Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').addClick(e => {
-    if (e.target.classList.contains('modal')) {
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.modal').fadeOut(500);
-      setTimeout(() => {
-        document.body.style.overflow = '';
-        document.body.style.marginRight = '';
-      }, 500);
-    }
-  });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).addClick(e => {
+      if (e.target.classList.contains('modal')) {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(target).fadeOut(500);
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          document.body.style.marginRight = '';
+
+          if (created) {
+            document.querySelector(target).remove();
+          }
+        }, 500);
+      }
+    });
+  }
 };
 
 Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modal"]').modal();
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createModal = function () {
+  let {
+    text,
+    btns
+  } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  for (let i = 0; i < this.length; i++) {
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).setAttr('id', Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).getAttr('data-target').slice(1)); // btns = {count: num, settings: [[text, classNames = [], close, callback]]}
+    // кнопки btns = {кол-вол кнопок: 2, настройки: [[строка с текстом внутри кнопки, классы стилей кнопки, кнопка "закрыть"(true или false), callback ф-ция]]}
+
+    const buttons = [];
+
+    for (let j = 0; j < btns.count; j++) {
+      let [buttonText, classNames, close, callback] = btns.settings[j]; // деструктурируем массив settings
+
+      let btn = document.createElement('button'); // создаем кнопку
+
+      btn.classList.add('btn', ...classNames); // добавляем классы стилей
+
+      btn.textContent = buttonText; // устанавливаем текст кнопки из btns.settings[j][0]
+
+      if (close) {
+        // если btns.settings[j][2] = true, т.е. нужно, чтобы кнопка закрывала модальное окно, то
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(btn).setAttr('data-close', 'true'); // устанавливаем атрибут data-close
+      }
+
+      if (callback && typeof callback === 'function') {
+        // если передана callback ф-ция, то
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(btn).addClick(callback); // при клике на кнопку выполняется эта callback ф-ция
+      }
+
+      buttons.push(btn); // добавляем соззданную кнопку в массив с кнопками
+    }
+
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).htmlContent(`<div class="modal-dialog">
+	    		<div class="modal-content">
+	    			<button class="close" data-close><span>&times;</span></button>
+	    			<div class="modal-header">
+	    				<div class="modal-title">${text.title}</div>
+	    			</div>
+	    			<div class="modal-body">${text.body}</div>
+	    			<div class="modal-footer">
+	    				
+	    			</div>
+	    		</div>
+	    	</div>`);
+    modal.querySelector('.modal-footer').append(...buttons);
+    document.body.append(modal);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).modal(true);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).getAttr('data-target')).fadeIn(500);
+  }
+};
 
 /***/ }),
 
@@ -855,6 +917,22 @@ $('button').getElem(2).addClick(() => {
 	</div>`
 );
 $('.dropdown-toggle').dropdown();*/
+//Динамическое создание модальных окон
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').addClick(() => Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
+  text: {
+    title: 'Dinamic Modal title',
+    body: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt, quam odit, dolor cupiditate velit porro recusandae. Tenetur, eius ullam, amet veritatis neque fuga dolorem sapiente ducimus nisi, inventore ex fugiat?'
+  },
+  btns: {
+    count: 3,
+    settings: [['Close', ['btn-danger', 'mr-10'], true], ['Save canges', ['btn-success', 'mr-10'], false, () => {
+      alert('Changes are saved');
+    }], ['Exit', ['btn-warning'], false, () => {
+      alert('Please, save the results!');
+    }]]
+  }
+}));
 
 /***/ })
 
