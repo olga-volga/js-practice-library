@@ -934,7 +934,7 @@ $('button').getElem(2).addClick(() => {
 
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrap').htmlContent(`<div class="dropdown">
 	    <button class="btn btn-primary dropdown-toggle dropdown-toggle-dinamic" id="dropdownMenuButtonDinamic">Dropdown dinamic button</button>
-	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButtonDinamic>
+	    <div class="dropdown-menu" data-toggle-id="dropdownMenuButtonDinamic">
 	    	<a href="#" class="dropdown-item">Action #1</a>
 	    	<a href="#" class="dropdown-item">Action #2</a>
 	    	<a href="#" class="dropdown-item">Action #3</a>
