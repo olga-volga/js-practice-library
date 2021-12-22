@@ -17,23 +17,24 @@ $.prototype.slider = function(autoplayInterval = false) {
 			item.style.width = sliderInnerWidth;
 		});
 
+		const moveSlide = (value, index) => {
+			slidesField.style.transform = `translateX(-${value}px)`;
+
+			dots.forEach(item => $(item).removeClass('active'));
+			$(dots[index]).addClass('active');
+		};
+
 		$(this[i].querySelector('[data-slide="next"]')).addClick((e) => {
 			e.preventDefault();
 
 			if (offset == +sliderInnerWidth.replace(/\D/ig, '') * (slides.length - 1)) {
 				offset = 0;
-			} else {
-				offset += +sliderInnerWidth.replace(/\D/ig, '');
-			}
-			slidesField.style.transform = `translateX(-${offset}px)`;
-
-			if (slideIndex == slides.length - 1) {
 				slideIndex = 0;
 			} else {
+				offset += +sliderInnerWidth.replace(/\D/ig, '');
 				slideIndex++;
 			}
-			dots.forEach(item => $(item).removeClass('active'));
-			$(dots[slideIndex]).addClass('active');
+			moveSlide(offset, slideIndex);
 		});
 
 		$(this[i].querySelector('[data-slide="prev"]')).addClick((e) => {
@@ -41,29 +42,19 @@ $.prototype.slider = function(autoplayInterval = false) {
 
 			if (offset == 0) {
 				offset = +sliderInnerWidth.replace(/\D/ig, '') * (slides.length - 1);
-			} else {
-				offset -= sliderInnerWidth.replace(/\D/ig, '');
-			}
-			slidesField.style.transform = `translateX(-${offset}px)`;
-
-			if (slideIndex == 0) {
 				slideIndex = slides.length - 1;
 			} else {
+				offset -= sliderInnerWidth.replace(/\D/ig, '');
 				slideIndex--;
 			}
-			dots.forEach(item => $(item).removeClass('active'));
-			$(dots[slideIndex]).addClass('active');
+			moveSlide(offset, slideIndex);
 		});
 
 		dots.forEach(item => {
 			$(item).addClick(() => {
 				slideIndex = +$(item).getAttr('data-slide-to');
-
 				offset = +sliderInnerWidth.replace(/\D/ig, '') * slideIndex;
-				slidesField.style.transform = `translateX(-${offset}px)`;
-
-				dots.forEach(item => $(item).removeClass('active'));
-				$(dots[slideIndex]).addClass('active');
+				moveSlide(offset, slideIndex);
 			});
 		});
 
@@ -75,9 +66,10 @@ $.prototype.slider = function(autoplayInterval = false) {
 
 		if (autoplayInterval) {
 			activateAutoplay();
+
+			$(this[i]).addAction('mouseenter', () => clearInterval(timerId));
+			$(this[i]).addAction('mouseleave', () => activateAutoplay());
 		}
-		$(this[i]).addAction('mouseenter', () => clearInterval(timerId));
-		$(this[i]).addAction('mouseleave', () => activateAutoplay());
 	}
 };
 
