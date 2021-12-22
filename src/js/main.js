@@ -134,3 +134,27 @@ $('#trigger').addClick(() => $('#trigger').createModal({
 		]
 	}
 }));
+
+//Динамическое создание слайдера
+$('#carouselDinamic').createSlider({
+	width: 500,
+	height: 350,
+	slides: [
+		{
+			src: 'https://huntland.ru/wp-content/uploads/2019/01/kavkazskiy_lesnoy_kot_6-e1548746794178-1024x638.jpg',
+			alt: 'photo'
+		},
+		{
+			src: 'https://animalreader.ru/wp-content/uploads/2014/04/lisa-e1397925485832.jpg',
+			alt: 'photo'
+		},
+		{
+			src: 'https://www.b17.ru/foto/uploaded/upl_1609658858_18874_a4z66.jpg',
+			alt: 'photo'
+		},
+		{
+			src: 'https://pbs.twimg.com/media/EZAdCN4XYAIzVl9.jpg',
+			alt: 'photo'
+		}
+	]
+}).slider(5000);

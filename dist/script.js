@@ -265,6 +265,152 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createModal = function (
 
 /***/ }),
 
+/***/ "./src/js/lib/components/slider.js":
+/*!*****************************************!*\
+  !*** ./src/js/lib/components/slider.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.slider = function () {
+  let autoplayInterval = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+  for (let i = 0; i < this.length; i++) {
+    const sliderInnerWidth = window.getComputedStyle(this[i].querySelector('.carousel-inner')).width; // ширина carousel-inner из браузера
+
+    const slides = this[i].querySelectorAll('.carousel-item'); // слайды
+
+    const slidesField = this[i].querySelector('.carousel-slides'); // обертка слайдов
+
+    const dots = this[i].querySelectorAll('.carousel-indicators li'); // точки-индикаторы слайдов
+
+    let slideIndex = 0;
+    let offset = 0;
+    let timerId;
+    slidesField.style.width = 100 * slides.length + '%'; // задаем ширину carousel-slides в зависимости от количества слайдов
+
+    slides.forEach(item => {
+      // задаем ширину для каждого слайда равной sliderInnerWidth, т.к. будет показываться по одному слайду
+      item.style.width = sliderInnerWidth;
+    });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].querySelector('[data-slide="next"]')).addClick(e => {
+      e.preventDefault();
+
+      if (offset == +sliderInnerWidth.replace(/\D/ig, '') * (slides.length - 1)) {
+        offset = 0;
+      } else {
+        offset += +sliderInnerWidth.replace(/\D/ig, '');
+      }
+
+      slidesField.style.transform = `translateX(-${offset}px)`;
+
+      if (slideIndex == slides.length - 1) {
+        slideIndex = 0;
+      } else {
+        slideIndex++;
+      }
+
+      dots.forEach(item => Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).removeClass('active'));
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(dots[slideIndex]).addClass('active');
+    });
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].querySelector('[data-slide="prev"]')).addClick(e => {
+      e.preventDefault();
+
+      if (offset == 0) {
+        offset = +sliderInnerWidth.replace(/\D/ig, '') * (slides.length - 1);
+      } else {
+        offset -= sliderInnerWidth.replace(/\D/ig, '');
+      }
+
+      slidesField.style.transform = `translateX(-${offset}px)`;
+
+      if (slideIndex == 0) {
+        slideIndex = slides.length - 1;
+      } else {
+        slideIndex--;
+      }
+
+      dots.forEach(item => Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).removeClass('active'));
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(dots[slideIndex]).addClass('active');
+    });
+    dots.forEach(item => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).addClick(() => {
+        slideIndex = +Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).getAttr('data-slide-to');
+        offset = +sliderInnerWidth.replace(/\D/ig, '') * slideIndex;
+        slidesField.style.transform = `translateX(-${offset}px)`;
+        dots.forEach(item => Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).removeClass('active'));
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(dots[slideIndex]).addClass('active');
+      });
+    });
+
+    const activateAutoplay = () => {
+      timerId = setInterval(() => {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i].querySelector('[data-slide="next"]')).addClick();
+      }, autoplayInterval);
+    };
+
+    if (autoplayInterval) {
+      activateAutoplay();
+    }
+
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).addAction('mouseenter', () => clearInterval(timerId));
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).addAction('mouseleave', () => activateAutoplay());
+  }
+};
+
+Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('#carousel').slider();
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createSlider = function (_ref) {
+  let {
+    width,
+    height,
+    slides
+  } = _ref;
+
+  for (let i = 0; i < this.length; i++) {
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).htmlContent(`<ol class="carousel-indicators"></ol>
+	    	<div class="carousel-inner">
+	    		<div class="carousel-slides"></div>
+	    	</div>
+	    	<a href="#" class="carousel-prev" data-slide="prev">
+	    		<span class="carousel-prev-icon">&lt;</span>
+	    	</a>
+	    	<a href="#" class="carousel-next" data-slide="next">
+	    		<span class="carousel-next-icon">&gt;</span>
+	    	</a>`);
+    this[i].style.width = `${width}px`; // задаем ширину всего слайдера
+
+    this[i].querySelector('.carousel-inner').style.height = `${height}px`; // задаем высоту carousel-inner
+
+    for (let j = 0; j < slides.length; j++) {
+      const indicator = document.createElement('li');
+      const slideItem = document.createElement('div');
+      const slideImg = document.createElement('img');
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(indicator).setAttr('data-slide-to', `${j}`);
+
+      if (j == 0) {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(indicator).addClass('active');
+      }
+
+      this[i].querySelector('.carousel-indicators').append(indicator);
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(slideItem).addClass('carousel-item');
+      this[i].querySelector('.carousel-slides').append(slideItem);
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(slideImg).setAttr('src', `${slides[j].src}`);
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(slideImg).setAttr('alt', `${slides[j].alt}`);
+      slideItem.append(slideImg);
+    }
+  }
+
+  return this;
+};
+
+/***/ }),
+
 /***/ "./src/js/lib/components/tab.js":
 /*!**************************************!*\
   !*** ./src/js/lib/components/tab.js ***!
@@ -373,6 +519,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/modal */ "./src/js/lib/components/modal.js");
 /* harmony import */ var _components_tab__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/tab */ "./src/js/lib/components/tab.js");
 /* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/accordion */ "./src/js/lib/components/accordion.js");
+/* harmony import */ var _components_slider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/slider */ "./src/js/lib/components/slider.js");
+
 
 
 
@@ -992,7 +1140,25 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').addClick(()
       alert('Please, save the results!');
     }]]
   }
-}));
+})); //Динамическое создание слайдера
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#carouselDinamic').createSlider({
+  width: 500,
+  height: 350,
+  slides: [{
+    src: 'https://huntland.ru/wp-content/uploads/2019/01/kavkazskiy_lesnoy_kot_6-e1548746794178-1024x638.jpg',
+    alt: 'photo'
+  }, {
+    src: 'https://animalreader.ru/wp-content/uploads/2014/04/lisa-e1397925485832.jpg',
+    alt: 'photo'
+  }, {
+    src: 'https://www.b17.ru/foto/uploaded/upl_1609658858_18874_a4z66.jpg',
+    alt: 'photo'
+  }, {
+    src: 'https://pbs.twimg.com/media/EZAdCN4XYAIzVl9.jpg',
+    alt: 'photo'
+  }]
+}).slider(5000);
 
 /***/ })
 
