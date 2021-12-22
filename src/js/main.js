@@ -161,3 +161,16 @@ $('#carouselDinamic').createSlider({
 		}
 	]
 }).slider(5000);
+
+//Сервисы для работы с сервером
+//получение данных
+/*$().getData('https://jsonplaceholder.typicode.com/todos/1')
+	.then(res => console.log(res));
+$().getData('https://jsonplaceholder.typicode.com/todos/1', 'text')
+	.then(res => console.log(res));
+$().getData('https://jsonplaceholder.typicode.com/todos/1', 'blob')
+	.then(res => console.log(res));*/
+
+//отправка данных
+$().postData('https://jsonplaceholder.typicode.com/posts', 'lorem lorem lorem')
+	.then(res => console.log(res));
