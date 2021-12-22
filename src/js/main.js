@@ -139,6 +139,9 @@ $('#trigger').addClick(() => $('#trigger').createModal({
 $('#carouselDinamic').createSlider({
 	width: 500,
 	height: 350,
+	effects: {
+		transition: 'all 0.5s'
+	},
 	slides: [
 		{
 			src: 'https://huntland.ru/wp-content/uploads/2019/01/kavkazskiy_lesnoy_kot_6-e1548746794178-1024x638.jpg',

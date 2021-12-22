@@ -19,6 +19,7 @@ $.prototype.slider = function(autoplayInterval = false) {
 
 		const moveSlide = (value, index) => {
 			slidesField.style.transform = `translateX(-${value}px)`;
+			$(slidesField).fadeIn(300, 'flex');
 
 			dots.forEach(item => $(item).removeClass('active'));
 			$(dots[index]).addClass('active');
@@ -75,7 +76,7 @@ $.prototype.slider = function(autoplayInterval = false) {
 
 $('#carousel').slider();
 
-$.prototype.createSlider = function({width, height, slides}) {
+$.prototype.createSlider = function({width, height, effects, slides}) {
 	for (let i = 0; i < this.length; i++) {
 		$(this[i]).htmlContent(
 			`<ol class="carousel-indicators"></ol>
@@ -111,6 +112,8 @@ $.prototype.createSlider = function({width, height, slides}) {
 			$(slideImg).setAttr('alt', `${slides[j].alt}`);
 			slideItem.append(slideImg);
 		}
+
+		this[i].querySelector('.carousel-slides').style.transition = effects.transition;
 	}
 	return this;
 };

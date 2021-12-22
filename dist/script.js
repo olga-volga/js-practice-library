@@ -301,6 +301,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.slider = function () {
 
     const moveSlide = (value, index) => {
       slidesField.style.transform = `translateX(-${value}px)`;
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(slidesField).fadeIn(300, 'flex');
       dots.forEach(item => Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(item).removeClass('active'));
       Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(dots[index]).addClass('active');
     };
@@ -359,6 +360,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createSlider = function 
   let {
     width,
     height,
+    effects,
     slides
   } = _ref;
 
@@ -394,6 +396,8 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.createSlider = function 
       Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(slideImg).setAttr('alt', `${slides[j].alt}`);
       slideItem.append(slideImg);
     }
+
+    this[i].querySelector('.carousel-slides').style.transition = effects.transition;
   }
 
   return this;
@@ -1135,6 +1139,9 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').addClick(()
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#carouselDinamic').createSlider({
   width: 500,
   height: 350,
+  effects: {
+    transition: 'all 0.5s'
+  },
   slides: [{
     src: 'https://huntland.ru/wp-content/uploads/2019/01/kavkazskiy_lesnoy_kot_6-e1548746794178-1024x638.jpg',
     alt: 'photo'
