@@ -160,11 +160,12 @@ __webpack_require__.r(__webpack_exports__);
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.submitForm = function () {
   for (let i = 0; i < this.length; i++) {
-    //console.log(this);
     Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).addAction('submit', e => {
       e.preventDefault();
       const formData = new FormData(this[i]);
-      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])().postData('https://jsonplaceholder.typicode.com/posts', formData).then(res => console.log(res));
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])().postData('server.php', formData).then(res => console.log(res)).catch(err => console.log(err)).finally(() => {
+        this[i].reset();
+      });
     });
   }
 };
@@ -1247,10 +1248,6 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#carouselDinamic').cre
 $().getData('https://jsonplaceholder.typicode.com/todos/1', 'text')
 	.then(res => console.log(res));
 $().getData('https://jsonplaceholder.typicode.com/todos/1', 'blob')
-	.then(res => console.log(res));*/
-//отправка данных
-
-/*$().postData('https://jsonplaceholder.typicode.com/posts', 'lorem lorem lorem')
 	.then(res => console.log(res));*/
 
 /***/ })
