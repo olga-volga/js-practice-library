@@ -11,5 +11,6 @@ import './components/tab';
 import './components/accordion';
 import './components/slider';
 import './services/requests';
+import './components/form';
 
 export default $;

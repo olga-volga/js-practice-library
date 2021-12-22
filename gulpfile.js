@@ -8,8 +8,9 @@ const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
 
-// const dist = "/Applications/MAMP/htdocs/test"; // Ссылка на вашу папку на локальном сервере
-const dist = "./dist";
+const dist = "C:/MAMP/htdocs/test/library";
+//"/Applications/MAMP/htdocs/test"; // Ссылка на вашу папку на локальном сервере
+//const dist = "./dist";
 
 gulp.task("copy-html", () => {
     return gulp.src("./src/index.html")
@@ -20,6 +21,12 @@ gulp.task("copy-html", () => {
 gulp.task("build-sass", () => {
     return gulp.src("./src/sass/style.scss")
                 .pipe(sass().on('error', sass.logError))
+                .pipe(gulp.dest(dist))
+                .pipe(browsersync.stream());
+});
+
+gulp.task("copy-php", () => {
+    return gulp.src("./src/server.php")
                 .pipe(gulp.dest(dist))
                 .pipe(browsersync.stream());
 });
@@ -66,9 +73,10 @@ gulp.task("watch", () => {
     gulp.watch("./src/index.html", gulp.parallel("copy-html"));
     gulp.watch("./src/js/**/*.js", gulp.parallel("build-js"));
     gulp.watch("./src/sass/**/*.scss", gulp.parallel("build-sass"));
+    gulp.watch("./src/server.php", gulp.parallel("copy-php"));
 });
 
-gulp.task("build", gulp.parallel("copy-html", "build-js", "build-sass"));
+gulp.task("build", gulp.parallel("copy-html", "build-js", "build-sass", "copy-php"));
 
 gulp.task("prod", () => {
     gulp.src("./src/sass/style.scss")

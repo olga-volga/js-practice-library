@@ -146,6 +146,33 @@ Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('.dropdown-toggle').dropdo
 
 /***/ }),
 
+/***/ "./src/js/lib/components/form.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/components/form.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.submitForm = function () {
+  for (let i = 0; i < this.length; i++) {
+    //console.log(this);
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).addAction('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(this[i]);
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])().postData('https://jsonplaceholder.typicode.com/posts', formData).then(res => console.log(res));
+    });
+  }
+};
+
+Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])('form').submitForm();
+
+/***/ }),
+
 /***/ "./src/js/lib/components/modal.js":
 /*!****************************************!*\
   !*** ./src/js/lib/components/modal.js ***!
@@ -515,6 +542,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/accordion */ "./src/js/lib/components/accordion.js");
 /* harmony import */ var _components_slider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/slider */ "./src/js/lib/components/slider.js");
 /* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/requests */ "./src/js/lib/services/requests.js");
+/* harmony import */ var _components_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/form */ "./src/js/lib/components/form.js");
+
 
 
 
@@ -1221,7 +1250,8 @@ $().getData('https://jsonplaceholder.typicode.com/todos/1', 'blob')
 	.then(res => console.log(res));*/
 //отправка данных
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])().postData('https://jsonplaceholder.typicode.com/posts', 'lorem lorem lorem').then(res => console.log(res));
+/*$().postData('https://jsonplaceholder.typicode.com/posts', 'lorem lorem lorem')
+	.then(res => console.log(res));*/
 
 /***/ })
 
